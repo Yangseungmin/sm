@@ -9,14 +9,18 @@
       a.navbar-brand(href='/') 
         i.fa.fa-home
     #navbar.collapse.navbar-collapse
+      ul.nav.navbar-nav.navbar-left
+        if (currentUser)
+          li
+            a(href='/posts') 호스팅목록
+          li
+            a(href='/posts/new') 호스팅하기 
+           
  
       ul.nav.navbar-nav.navbar-right
         if (currentUser) 
           li
             a(href='/users/#{currentUser._id}') Profile
-          
-          li
-            a(href='/posts') 글쓰기
           li
             a(href='/users') Users 
           li

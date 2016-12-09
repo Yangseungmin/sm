@@ -3,9 +3,9 @@ extends ../layout
 block content
   .container
     if post.id
-      h1.page-header 글수정
+      h1.page-header 호스팅수정
     else
-      h1.page-header 글쓰기
+      h1.page-header 호스팅하기
 
     form(action = (post.id) ? "/posts/#{post.id}?_method=PUT" : "/posts", method='POST')
       .form-group
@@ -19,6 +19,14 @@ block content
       .form-group
         label(for='content') Content
         textarea.form-control(id='content', rows='10', name='content', placeholder='content here')= post.content
+       .form-group
+        label(for='continet') 대륙
+        select.form-control(name='continent')
+          option(value='1', selected) 아시아
+          option(value='2') 유럽
+          option(value='3') 아메리카
+          option(value='4') 오세아니아
+          option(value='5') 아프리카
 
       div.form-actions
         a.btn.btn-default(href='javascript:window.history.back();') 뒤로 

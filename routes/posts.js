@@ -12,11 +12,13 @@ function needAuth(req, res, next) {
 }
 
 router.get('/', function(req, res, next) {
-  
-   
-    res.render('posts/edit', {post: {}});
+  Post.find({}, function(err, posts) {
+    if (err) {
+      return next(err);
+    }
+    res.render('posts/index', {posts: posts});
+  });
 });
-
 //화면 표현
 
 
