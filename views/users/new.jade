@@ -16,6 +16,10 @@ block content
       .form-group
         label(for='password_confirmation') Password 확인
         input.form-control(type='password', id='password_confirmation', name='password_confirmation', placeholder='Password')
+        label(for='type_h') 호스트
+        input(type='radio' id='type_h' name='host_type' value='host' checked)
+        label(for='type_g') 여행자
+        input(type='radio' id='type_g' name='host_type' value='guest')
       div.form-actions
         a.btn.btn-default(href='javascript:window.history.back();') 뒤로 
         | 

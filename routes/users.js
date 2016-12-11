@@ -14,8 +14,10 @@ function needAuth(req, res, next) {
 function validateForm(form, options) {
   var name = form.name || "";
   var email = form.email || "";
+    var host_type = form.host_type || "";
   name = name.trim();
   email = email.trim();
+  host_type = host_type.trim();
 
   if (!name) {
     return '이름을 입력해주세요.';
@@ -41,12 +43,23 @@ function validateForm(form, options) {
 }
 
 /* GET users listing. */
-router.get('/', needAuth, function(req, res, next) {
+router.get('/:id/index', function(req, res, next) {
   User.find({}, function(err, users) {
     if (err) {
       return next(err);
     }
-    res.render('users/index', {users: users});
+    User.findById(req.params.id, function(err, user){
+      if(err) {
+        return next(err);
+      }
+      if(user.manager === "yes"){
+        res.render('users/index', {users: users});
+      } else {
+        req.flash('danger', '관리자 권한이 없습니다');
+        return res.redirect('back');
+      }
+    });
+     
   });
 });
 
@@ -136,6 +149,7 @@ router.post('/', function(req, res, next) {
     var newUser = new User({
       name: req.body.name,
       email: req.body.email,
+      host_type: req.body.host_type
     });
     newUser.password = newUser.generateHash(req.body.password);
 

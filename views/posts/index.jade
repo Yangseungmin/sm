@@ -2,41 +2,31 @@ extends ../layout
 
 block content
   .container
-    h1.page-header List
+    h1.page-header 숙소 예약 및 등록
     
-
-    table.table.table-bordered
+    table.table.table-striped.table-bordered
       thead
         tr
-          th 이메일
-          th 제목
-          th 날짜
-          th 조회수
-          th
+          th 작성자
+          th 숙소 이름
+          th 도시
+          th 숙소 요금
+          th 수용 인원
+          th 작성일시
+          th 
       tbody
         each post in posts
           tr
-            td= post.email
             td
-              a(href='/posts/#{post.id}')= post.title
+              a(href='/users/#{post.owner._id}')= post.owner.username
+            td
+              a(href='/posts/#{post._id}')= post.title
+            td= post.city
+            td= post.charge
+            td= post.human
             td= moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss')
-            td= post.read
             td
-              a.btn.btn-xs.btn-default(href='/posts/#{post.id}/edit') 수정
+              a.btn.btn-xs.btn-default(href='/posts/#{post._id}/edit') 수정
               | 
-              a.btn.btn-xs.btn-default(data-id=post.id, class='delete') 삭제
-
-    a.btn.btn-primary(href='/posts/new') 호스팅하기
-
-
-    form#deleteForm(style='display:none', method="POST")
-            
-    script(type='text/javascript').
-      $(".delete").click(function(e) {
-        var id = $(e.currentTarget).data('id');
-        if (confirm('정말 삭제하시겠습니까?')) {
-          $("#deleteForm").attr('action', "/posts/" + id + "?_method=DELETE").submit();          
-        }
-        return false;
-      });
-            
+              a.btn.btn-xs.btn-default(href='/posts/#{post._id}?_method=DELETE') 삭제
+    a.btn.btn-primary(href='/posts/new') 숙소 등록

@@ -2,33 +2,33 @@ extends ../layout
 
 block content
   .container
-    if post.id
-      h1.page-header 호스팅수정
-    else
-      h1.page-header 호스팅하기
-
-    form(action = (post.id) ? "/posts/#{post.id}?_method=PUT" : "/posts", method='POST')
-      .form-group
-        label(for='email') Email address
-        input.form-control(type='email', id='email', name='email', placeholder='Email', value=post.email)
-        label(for='password') Password
-        input.form-control(type='password', id='password', name='password', placeholder='Password')
+    h1.page-header 숙소 등록 수정
+    form(action='/posts/#{post._id}?_method=PUT', method='POST')
       .form-group
         label(for='title') Title
-        input.form-control(type='text', id='title', name='title', placeholder='title', value=post.title)
+        input.form-control(type='text', id='title', name='title', placeholder='숙소 이름을 입력하세요', value=post.title)
       .form-group
-        label(for='content') Content
-        textarea.form-control(id='content', rows='10', name='content', placeholder='content here')= post.content
-       .form-group
-        label(for='continet') 대륙
-        select.form-control(name='continent')
-          option(value='1', selected) 아시아
-          option(value='2') 유럽
-          option(value='3') 아메리카
-          option(value='4') 오세아니아
-          option(value='5') 아프리카
-
+        label(for='title') City
+        input.form-control(type='text', id='city', name='city', placeholder='도시를 입력하세요', value=post.city)
+      .form-group
+        label(for='human') Human
+        input.form-control(type='text', id='human', name='human', placeholder='수용 인원을 입력하세요', value=post.human)
+        .form-group
+        label(for='charge') Charge
+        input.form-control(type='text', id='charge', name='charge', placeholder='숙소 요금을 입력하세요', value=post.charge)
+      .form-group
+        label(for='address') Address
+        input.form-control(type='text', id='address', name='address', placeholder='숙소 주소를 입력하세요', value=post.address)
+      .form-group
+        label(for='convenience') Convenience
+        input.form-control(type='text', id='convenience', name='convenience', placeholder='편의 시설을 입력하세요', value=post.convenience)
+      .form-group
+        label(for='rule') Rule
+        input.form-control(type='text', id='rule', name='rule', placeholder='이용 규칙을 입력하세요', value=post.rule)
+      .form-group
+        label(for='body') Introduction
+        input.form-control(type='text', id='body', name='body', placeholder='간단한 설명을 입력하세요', value=post.body)
       div.form-actions
         a.btn.btn-default(href='javascript:window.history.back();') 뒤로 
         | 
-        button.btn.btn-primary(type='submit') 완료
+        button.btn.btn-primary(type='submit') 수정

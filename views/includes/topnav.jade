@@ -9,24 +9,21 @@
       a.navbar-brand(href='/') 
         i.fa.fa-home
     #navbar.collapse.navbar-collapse
-      ul.nav.navbar-nav.navbar-left
-        if (currentUser)
-          li
-            a(href='/posts') 호스팅목록
-          li
-            a(href='/posts/new') 호스팅하기 
-           
- 
+      ul.nav.navbar-nav
+        li
+          a(href='/posts') Hosting & Chechking
+       
       ul.nav.navbar-nav.navbar-right
         if (currentUser) 
+
+          li
+            a(href='/users/#{currentUser._id}/index') Settings
           li
             a(href='/users/#{currentUser._id}') Profile
           li
-            a(href='/users') Users 
+            a(href='/signout') Signout
+        else
           li
-            a(href='/signout') 로그아웃 
-        else 
+            a(href='/signin') Signin
           li
-            a(href='/users/new') 회원가입
-          li
-            a(href='/signin') 로그인
+            a(href='/users/new') Signup

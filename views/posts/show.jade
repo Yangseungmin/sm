@@ -2,13 +2,22 @@ extends ../layout
 
 block content
   .container
-    h1.page-header= post.title
+    h1.page-header 숙소 정보
+          
+    ul
+      li 숙소 이름: #{post.title}
+      li 도시: #{post.city}
+      li 수용 인원 : #{post.human}
+      li 숙소 요금: #{post.charge}
+      li 주소: #{post.address}
+      li 편의 시설 : #{post.convenience}
+      li 이용 규칙 : #{post.rule}
+      li 간단한 설명: #{post.body}
+
+    hr
     p
-      b by #{post.email}
+      a.btn.btn-default(href='/posts/') 게시글 목록
       | 
-      span at #{moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss')} 
+      a.btn.btn-default(href='/posts/#{post._id}/edit') 게시글 수정
       | 
-      | (조회수 #{post.read})
-    p.well(style='white-space:pre;')= post.content
-    
-    a.btn.btn-default(href='/posts') 목록
+      a.btn.btn-default(href='/posts/#{post._id}?_method=DELETE') 게시글 삭제
