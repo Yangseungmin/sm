@@ -1,3 +1,9 @@
+.form-control#search_keyword {
+  width: 300px; }
+
+body {
+  background: url("/images/bnb3.jpg") no-repeat left top; }
+
 .form-signin {
   width: 320px;
   height: 300px;

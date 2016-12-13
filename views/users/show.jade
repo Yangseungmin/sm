@@ -7,6 +7,7 @@ block content
     ul
       li 이름: #{user.name}
       li 이메일: #{user.email}
+      li 유저 타입: #{user.host_type}
       if user.facebook
         li Facebook 
           img.img-circle(src='#{user.facebook.photo}')

@@ -1,0 +1,34 @@
+extends ../layout
+
+block content
+  .container
+    h1.page-header 예약 신청목록
+    h2 #{post.title}
+    
+    table.table.table-striped.table-bordered
+        thead
+            tr
+                th 신청자
+                th 체크인
+                th 체크아웃
+                th 숙박 인원
+                th 신청일자
+                th 예약관리
+        tbody
+            each reservation in reservations
+                td
+                    a(href='/users/#{post.owner._id}')= post.owner.username
+                td= moment(reservation.check_in).format('YYYY-MM-DD HH:mm:ss')
+                td= moment(reservation.check_out).format('YYYY-MM-DD HH:mm:ss')
+                td= reservation.people
+                td= moment(reservation.createdAt).format('YYYY-MM-DD HH:mm:ss')
+                td
+                    if(reservation.status == 1)
+                        span#complete 예약완료
+                    else
+                        a.btn.btn-xs.btn-default(href='/reservations/#{reservation._id}?_method=PUT') 승인
+                        a.btn.btn-xs.btn-default(href='/reservations/#{reservation._id}?_method=DELETE') 거절
+                | 
+
+    div
+        a.btn.btn-default(href='/posts') 숙소 목록

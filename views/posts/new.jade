@@ -6,19 +6,19 @@ block content
     form(action='/posts', method='POST')
       .form-group
         label(for='title') Title
-        input.form-control(type='text', id='title', name='title', placeholder='제목을 입력하세요')
+        input.form-control(type='text', id='title', name='title', placeholder='숙소 이름을 입력하세요')
       .form-group
         label(for='city') City
         input.form-control(type='text', id='city', name='city', placeholder='도시를 입력하세요')
       .form-group
-        label(for='address') Address
-        input.form-control(type='text', id='address', name='address', placeholder='숙소 주소를 입력하세요')
+        label(for='human') Human
+        input.form-control(type='text', id='human', name='human', placeholder='수용 인원을 입력하세요')
       .form-group
         label(for='charge') Charge
         input.form-control(type='text', id='charge', name='charge', placeholder='숙소 요금을 입력하세요')
       .form-group
-        label(for='human') 예약 가능 인원
-       input.form-control(type='text', id='human', name='human', placeholder='예약 가능 인원을 입력하세요')
+        label(for='address') Address
+        input.form-control(type='text', id='address', name='address', placeholder='숙소 주소를 입력하세요')
       .form-group
         label(for='convenience') Convenience
         input.form-control(type='text', id='convenience', name='convenience', placeholder='편의 시설을 입력하세요')
@@ -28,8 +28,7 @@ block content
       .form-group
         label(for='body') introduction
         input.form-control(type='text', id='body', name='body', placeholder='숙소에 대한 간단한 설명을 해주세요')
-      
-     
+   
       div.form-actions
         a.btn.btn-default(href='javascript:window.history.back();') 뒤로 
         | 

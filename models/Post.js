@@ -7,10 +7,9 @@ var mongoose = require('mongoose'),
 
 var schema = new Schema({
   title: {type: String, trim: true},
-  city : {type: String},
+  address : {type : String},
   human : {type : String},
   charge : {type : String},
-  address : {type : String},
   convenience : {type : String},
   rule : {type : String},
  
@@ -25,6 +24,8 @@ var schema = new Schema({
   toJSON: { virtuals: true},
   toObject: {virtuals: true}
 });
+
+schema.index({address: "text"});
 
 var Post = mongoose.model('Post', schema);
 

@@ -1,0 +1,21 @@
+extends ../layout
+block content
+  .container
+    h1.page-header 상세 정보
+          
+    ul
+      li 체크인 날짜 : 
+        =moment(reservation.check_in).format('YYYY-MM-DD HH:mm:ss')
+      li 체크아웃 날짜 :
+        =moment(reservation.check_out).format('YYYY-MM-DD HH:mm:ss')
+      li 숙소 인원 : #{reservation.people}
+
+    p
+        -console.log(currentUser._id.toString());
+        -console.log(reservation.user_id);
+      if(currentUser)
+        if(currentUser._id.toString()==reservation.user_id.toString())
+          a.btn.btn-default(href='/posts/') 숙소 목록
+          a.btn.btn-default#cancel(href='/reservations/#{reservation._id}?_method=DELETE') 예약 취소
+        else
+          a.btn.btn-default(href='/posts/') 숙소 목록

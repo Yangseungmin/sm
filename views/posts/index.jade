@@ -8,8 +8,8 @@ block content
       thead
         tr
           th 작성자
-          th 제목
-          th 도시
+          th 숙소 이름
+          th 주소
           th 숙소 요금
           th 수용 인원
           th 작성일시
@@ -21,12 +21,29 @@ block content
               a(href='/users/#{post.owner._id}')= post.owner.username
             td
               a(href='/posts/#{post._id}')= post.title
-            td= post.city
+            td= post.address
             td= post.charge
             td= post.human
             td= moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss')
             td
-              a.btn.btn-xs.btn-default(href='/posts/#{post._id}/edit') 수정
-              | 
-              a.btn.btn-xs.btn-default(href='/posts/#{post._id}?_method=DELETE') 삭제
-    a.btn.btn-primary(href='/posts/new') 숙소 등록
+              if(currentUser._id.toString()==post.owner._id.toString())
+                a.btn.btn-xs.btn-default(href='/posts/#{post._id}/edit') 수정
+                | 
+                a.btn.btn-xs.btn-default(href='/posts/#{post._id}?_method=DELETE') 삭제
+                | 
+                a.btn.btn-xs.btn-default(href='/posts/#{post._id}/manage') 예약관리
+              else
+                if(post.reservation != null)
+                  a.btn.btn-xs.btn-default#waiting(href='/reservations/#{post.reservation}') 예약중
+                else
+                  a.btn.btn-xs.btn-default(href='/reservations/new/#{post._id}') 예약신청
+
+    div.row
+      div.col-sm-4
+        form.search-form(role='search', method='GET', action='/posts')
+          .input-group
+            input.form-control(type='text', id='search_keyword', name='search_keyword', placeholder='도시로 검색하기')
+            span.input-group-btn
+              button.btn.btn-default(type='submit') 검색
+      div.col-sm-8.text-right
+        a.btn.btn-primary(href='/posts/new') 숙소 등록

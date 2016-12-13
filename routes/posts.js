@@ -1,16 +1,19 @@
 var express = require('express'),
     Post = require('../models/Post'),
-    User = require('../models/User');
+    User = require('../models/User'),
+    Reservation = require('../models/Reservation'),
+    _ = require('lodash');
 var router = express.Router();
 
 function needAuth(req, res, next) {
-    if (req.isAuthenticated) {
-      next();
-    } else {
-      req.flash('danger', '로그인이 필요합니다.');
-      res.redirect('/signin');
-    }
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    req.flash('danger', '로그인이 필요합니다.');
+    res.redirect('/signin');
+  }
 }
+
 
 function validateForm(form, options) {
   var title = form.title || "";
@@ -65,30 +68,53 @@ router.get('/', needAuth, function(req, res, next) {
     if (err) {
       return next(err);
     }
-    Post.find({}, function(err, posts) {
-    if (err) {
-      return next(err);
+    var keyword = req.query.search_keyword;
+
+    if(keyword){
+      Post.find({$text:{$search:keyword}}, function(err, posts) {
+      if (err) {
+        return next(err);
+      }
+        Reservation.find({user_id: req.user._id}, function(err, reservations){
+          posts.map(function(post, index){
+            var rev = _.find(reservations, {post_id: post._id});
+            post.reservation = rev ? rev._id : null;
+          });
+          res.render('posts/index', {users: users, posts: posts});
+        });
+      });
+    } else {
+      Post.find({}, function(err, posts) {
+      if (err) {
+        return next(err);
+      }
+        Reservation.find({user_id: req.user._id}, function(err, reservations){
+          posts.map(function(post, index){
+            var rev = _.find(reservations, {post_id: post._id});
+            post.reservation = rev ? rev._id : null;
+          });
+          res.render('posts/index', {users: users, posts: posts});
+        });
+      });
     }
-    res.render('posts/index', {users: users, posts: posts});
-    });
   });
-    
 });
 
-router.get('/new', function(req, res, next) {
+router.get('/new', needAuth, function(req, res, next) {
   res.render('posts/new', {messages: req.flash()});
 });
 
-router.get('/:id/edit', function(req, res, next) {
+router.get('/:id/edit',needAuth, function(req, res, next) {
   Post.findById(req.params.id, function(err, post) {
     if (err) {
       return next(err);
     }
-    res.render('posts/edit', {post: post});
+    res.render('posts/edit', {post: post, messages: req.flash()});
   });
 });
 
-router.put('/:id', function(req, res, next) {
+
+router.put('/:id',needAuth, function(req, res, next) {
   var err = validateForm(req.body);
   if (err) {
     req.flash('danger', err);
@@ -134,7 +160,7 @@ router.delete('/:id', function(req, res, next) {
   });
 });
 
-router.get('/:id', function(req, res, next) {
+router.get('/:id',needAuth, function(req, res, next) {
   Post.findById(req.params.id, function(err, post) {
     if (err) {
       return next(err);
@@ -143,7 +169,19 @@ router.get('/:id', function(req, res, next) {
   });
 });
 
-router.post('/', function(req, res, next) {
+router.get('/:id/manage',needAuth, function(req, res, next) {
+  Post.findById(req.params.id, function(err, post) {
+    if (err) {
+      return next(err);
+    }
+    Reservation.find({post_id:post._id}, function(err, reservations){
+      res.render('posts/manage', {post: post, reservations: reservations});
+    });
+  });
+});
+
+
+router.post('/', needAuth, function(req, res, next) {
   var err = validateForm(req.body, {needPassword: true});
   if (err) {
     req.flash('danger', err);
@@ -175,6 +213,7 @@ router.post('/', function(req, res, next) {
     }
   });
 });
+
 
 
 module.exports = router;

@@ -1,0 +1,29 @@
+extends ../layout
+
+block content
+  .container
+    h1.page-header 새 예약
+    form(action='/reservations/#{post._id}', method='POST')
+      .form-group
+        label(for='title') 예약신청할 글 제목 : #{post.title}
+        p
+          | Check-In: 
+          input#check_in(type='text', name='check_in')
+        p
+          | Check-Out: 
+          input#check_out(type='text', name='check_out')
+          .form-group
+          label(for='people', style="display:block;") 숙박 인원
+          div.form-box
+            select.selectpicker(class="people", name="people", id="people")
+              -for(i=1; i<=10; i++){
+                option=i
+              -}
+      div.form-actions
+        a.btn.btn-default(href='javascript:window.history.back();') 뒤로 
+        | 
+        button.btn.btn-primary(type='submit') 예약 신청
+
+    script.
+      $( "#check_in" ).datepicker();
+      $( "#check_out" ).datepicker();

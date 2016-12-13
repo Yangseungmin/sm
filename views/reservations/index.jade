@@ -1,0 +1,29 @@
+extends ../layout
+
+block content
+  .container
+    h1.page-header 예약신청
+    form(action='/reservations', method='POST')
+      .row
+      .col-sm-4
+        .form-group
+        label(for='rsv_title') 예약할 게시글
+        input.form-control(type='text', id='rsv_title', name='rsv_title')
+        .form-group
+          label(for='email') Email address
+          input.form-control(type='email', id='email', name='email', placeholder='Email')
+        .form-group
+          label(for='people', style="display:block;") 숙박 인원
+          div.form-box
+            select.selectpicker(class="people", name="peoples", id="peoples")
+
+        .form-group
+          label(for='rsv_info') 요청사항
+          input.form-control(type='text', id='rsv_info', name='rsv_info', placeholder='요청사항을 작성해주세요')
+
+        div.form-actions
+          a.btn.btn-default(href='javascript:window.history.back();') 뒤로
+          | 
+          button.btn.btn-primary.text-right(type='submit') 예약 신청
+      .col-sm-8
+        img#signup(src="/images/reservation.jpg")
