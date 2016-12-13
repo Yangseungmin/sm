@@ -4,9 +4,7 @@ block content
   .container
     h1.page-header 예약신청
     form(action='/reservations', method='POST')
-      .row
-      .col-sm-4
-        .form-group
+      .form-group
         label(for='rsv_title') 예약할 게시글
         input.form-control(type='text', id='rsv_title', name='rsv_title')
         .form-group
@@ -25,5 +23,3 @@ block content
           a.btn.btn-default(href='javascript:window.history.back();') 뒤로
           | 
           button.btn.btn-primary.text-right(type='submit') 예약 신청
-      .col-sm-8
-        img#signup(src="/images/reservation.jpg")

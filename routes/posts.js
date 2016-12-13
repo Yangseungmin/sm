@@ -17,7 +17,6 @@ function needAuth(req, res, next) {
 
 function validateForm(form, options) {
   var title = form.title || "";
-  var city = form.city || "";
   var human = form.human || "";
   var charge = form.charge || "";
   var address = form.address || "";
@@ -29,10 +28,6 @@ function validateForm(form, options) {
 
   if (!title) {
     return '숙소 이름을 입력해주세요.';
-  }
-
-  if (!city) {
-    return '도시를 입력해주세요.';
   }
   
   if (!human) {
@@ -131,7 +126,6 @@ router.put('/:id',needAuth, function(req, res, next) {
     }
 
     post.title = req.body.title;
-    post.city = req.body.city;
     post.human = req.body.human;
     post.charge = req.body.charge;
     post.address = req.body.address;
@@ -189,7 +183,6 @@ router.post('/', needAuth, function(req, res, next) {
   }
   var newPost = new Post({
     title: req.body.title,
-    city: req.body.city,
     human : req.body.human,
     charge : req.body.charge,
     address : req.body.address,
