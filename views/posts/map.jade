@@ -1,0 +1,35 @@
+ extends ../layout
+
+block content
+  .container
+        h1.page-header 맵
+    
+        script(type='text/javascript').
+        var mapContainer = document.getElmentByID('map'),
+        mapOption = {
+          center: new daum.maps.LastLng(33.450701, 126570667),
+          level: 3
+        };
+        var map = new daum.maps.Map(mapContainer, mapOption);
+
+        var geocoder = new daum.maps.services.Geocoder();
+
+        geocoder.addr2cooord('#{post.address}', function(status, result){
+          if (status === daum.maps.services.Status.OK){
+            
+            var coords = new daum.maps.LatLng(result.addr[0].lat, result.addr[0].lng);
+
+            var marker = new daum.maps.Marker({
+                map: map,
+                position: coords
+            });
+
+            var infowindow = new daum.maps.Infowindow({
+                content: '<div style="width:150px;text-align:center;padding:6px 0;">#{post.title}</div>'
+            });
+            inflowindow.open(map, marker);
+            map.setCenter(coords);
+
+          }
+        })
+  

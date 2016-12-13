@@ -106,7 +106,7 @@ router.put('/:id', function(req, res, next) {
 
     post.title = req.body.title;
     post.city = req.body.city;
-     post.human = req.body.human;
+    post.human = req.body.human;
     post.charge = req.body.charge;
     post.address = req.body.address;
     post.convenience = req.body.convenience;
